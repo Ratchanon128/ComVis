@@ -1,0 +1,8 @@
+# ไฟล์และโฟลเดอร์ที่เกี่ยวกับ Python virtual environment
+Com Vision/venv/
+*.pyc
+__pycache__/
+
+# ระบบที่สร้างขึ้นจาก IDE
+.idea/
+.vscode/
