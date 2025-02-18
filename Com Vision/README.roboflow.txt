@@ -1,8 +1,8 @@
 
-store - v2 2025-02-13 1:21am
+canteen - v1 2025-02-18 4:26pm
 ==============================
 
-This dataset was exported via roboflow.com on February 12, 2025 at 6:23 PM GMT
+This dataset was exported via roboflow.com on February 18, 2025 at 9:29 AM GMT
 
 Roboflow is an end-to-end computer vision platform that helps you
 * collaborate with your team on computer vision projects
@@ -17,18 +17,17 @@ visit https://github.com/roboflow/notebooks
 
 To find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com
 
-The dataset includes 22 images.
-Human are annotated in YOLOv11 format.
+The dataset includes 73 images.
+Person are annotated in YOLOv11 format.
 
 The following pre-processing was applied to each image:
 * Auto-orientation of pixel data (with EXIF-orientation stripping)
-* Resize to 640x640 (Fit within)
+* Resize to 640x640 (Stretch)
 
 The following augmentation was applied to create 3 versions of each source image:
-* 50% probability of horizontal flip
 * Randomly crop between 0 and 20 percent of the image
-* Random shear of between -10° to +10° horizontally and -10° to +10° vertically
+* Random brigthness adjustment of between -15 and +15 percent
 * Random Gaussian blur of between 0 and 2.5 pixels
-* Salt and pepper noise was applied to 1.01 percent of pixels
+* Salt and pepper noise was applied to 0.1 percent of pixels
 
 

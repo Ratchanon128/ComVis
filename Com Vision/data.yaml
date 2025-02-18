@@ -1,13 +1,13 @@
-train: ../train/images
-val: ../valid/images
-test: ../test/images
+train: C:\Users\Ratchanon\Desktop\NC\data\train\images
+val: C:\Users\Ratchanon\Desktop\NC\data\valid\images
+#test: ../test/images
 
 nc: 1
 names: ['human']
 
 roboflow:
   workspace: com-vision
-  project: store-44jdp
-  version: 2
+  project: canteen-lmz5h
+  version: 1
   license: CC BY 4.0
-  url: https://universe.roboflow.com/com-vision/store-44jdp/dataset/2
+  url: https://universe.roboflow.com/com-vision/canteen-lmz5h/dataset/1
