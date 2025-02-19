@@ -6,3 +6,7 @@ __pycache__/
 # ระบบที่สร้างขึ้นจาก IDE
 .idea/
 .vscode/
+
+Com Vision/video/
+*.mp4
+*.MOV
