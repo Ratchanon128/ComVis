@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # Load model
-model = YOLO(r"C:\Users\doram\Documents\GitHub\ComVis\Com Vision\runs\detect\train\weights\best.pt")
+model = YOLO("runs/detect/train/weights/best.pt")
 
 # Open video
-cap = cv2.VideoCapture(r"C:\Users\doram\Documents\GitHub\ComVis\Com Vision\video\IMG_5112.MOV")
+cap = cv2.VideoCapture("IMG_5112.MOV")
 
-background_img = cv2.imread(r"C:\Users\doram\Documents\GitHub\ComVis\shop_backgroud.jpg")
+background_img = cv2.imread("shop_backgroud.jpg")
 
 if not cap.isOpened():
     print("ไม่สามารถเปิดวิดีโอได้! ตรวจสอบ path หรือฟอร์แมตไฟล์อีกครั้ง")
@@ -31,7 +31,7 @@ total_heatmap = np.zeros((int(cap.get(4)), int(cap.get(3))), dtype=np.float32)
 
 # Define ROIs for each table/store
 roi_list = [
-    ((209, 544, 465, 217), 2),   # Table/Store 1
+    ((140, 544, 580, 217), 2),   # Table/Store 1
     ((1032, 587, 377, 201), 2),   # Table/Store 2
     ((1430, 599, 363, 206), 2),   # Table/Store 3
 ]
