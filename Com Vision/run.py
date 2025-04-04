@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 
+
 # โหลดโมเดล
 model = YOLO("runs/detect/train/weights/best.pt")
 
 # เปิดวิดีโอ
-cap = cv2.VideoCapture("ComVis/Com Vision/IMG_5112.MOV")
+cap = cv2.VideoCapture("Com Vision/IMG_5112.MOV")
 cap.set(cv2.CAP_PROP_BUFFERSIZE, 100)
 
 cv2.namedWindow("Detection", cv2.WINDOW_NORMAL)
@@ -15,9 +16,13 @@ cv2.resizeWindow("Detection", 800, 600)
 # สร้าง heatmap เปล่า
 heatmap = np.zeros((int(cap.get(4)), int(cap.get(3))), dtype=np.float32)
 
+# โหลดภาพพื้นหลังที่ต้องการซ้อน heatmap
+background_img = cv2.imread("Com Vision/shop_backgroud.jpg")
+background_img = cv2.resize(background_img, (int(cap.get(3)), int(cap.get(4))))
+
 # กำหนด ROI สำหรับแต่ละโต๊ะ
 roi_list = [
-    ((209, 544, 465, 217),2),   # โต๊ะ 1
+    ((84, 549, 698, 211),2),   # โต๊ะ 1
     ((1032, 587, 377, 201),2),   # โต๊ะ 2
     ((1430, 599, 363, 206),2), # โต๊ะ 3
     
@@ -84,8 +89,6 @@ while True:
         if mean_intensity > 0.7:
             if table_people_count[idx] == max_people_count:  # ถ้าจำนวนคนในกล่องสูงสุด
                 color = (0, 255, 255)  # สีเหลือง (สำหรับกล่องที่มีคนมากที่สุด)
-            else:
-                color = (0, 0, 255)  # สีแดง (ความหนาแน่นสูง)
         else:
             color = (255, 0, 0)  # สีฟ้า (ไม่มีความหนาแน่น)
 
@@ -100,12 +103,29 @@ while True:
         cv2.putText(frame, f"Table {idx + 1}", (roi_x, roi_y - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
+    # สร้างสำเนาของภาพพื้นหลัง
+    heatmap_on_background = background_img.copy()
+
+    # ซ้อน heatmap เฉพาะบริเวณ ROI ลงบนภาพพื้นหลัง
+    for idx, (roi, _) in enumerate(roi_list):
+        roi_x, roi_y, roi_w, roi_h = roi
+
+        # ดึงพื้นที่จาก heatmap สีที่ต้องการวาง
+        roi_heatmap = heatmap_colored[roi_y:roi_y + roi_h, roi_x:roi_x + roi_w]
+
+        # วาง ROI heatmap ลงบน background
+        heatmap_on_background[roi_y:roi_y + roi_h, roi_x:roi_x + roi_w] = cv2.addWeighted(
+        background_img[roi_y:roi_y + roi_h, roi_x:roi_x + roi_w], 0.5,
+        roi_heatmap, 0.5, 0)
+
+    # แสดงผล
     output_frame = cv2.addWeighted(frame, 0.6, heatmap_colored, 0.4, 0)
     cv2.imshow("Detection", output_frame)
-    # cv2.imshow("Heatmap", heatmap_colored)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+cv2.imwrite("heatmap_result.png", heatmap_on_background)
 
 cap.release()
 cv2.destroyAllWindows()
