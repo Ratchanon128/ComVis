@@ -1,0 +1,4 @@
+store,avg_intensity,max_intensity,avg_people,max_people,total_visits,avg_visit_duration
+Store 1,1.5013089870009744,1.7654625637976313,3.4166666666666665,4,0,0
+Store 2,0.0,0.0,0.0,0,0,0
+Store 3,0.0,0.0,0.0,0,0,0
